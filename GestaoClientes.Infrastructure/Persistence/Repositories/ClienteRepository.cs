@@ -15,25 +15,26 @@ public class ClienteRepository : IClienteRepository
 
     public async Task<Cliente> GetByIdAsync(int id)
     {
-        return await _context.Clientes.Include(c => c.Telefones).SingleOrDefaultAsync(c => c.Id == id);
+        return await _context.Clientes.Include(c => c.Telefones).AsNoTracking().SingleOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<Cliente> GetByEmailAsync(string email)
     {
-        return await _context.Clientes.Include(c => c.Telefones).SingleOrDefaultAsync(c => c.Email == email);
+        return await _context.Clientes.Include(c => c.Telefones).AsNoTracking().SingleOrDefaultAsync(c => c.Email == email);
     }
 
     public async Task<Cliente> GetByNumberAsync(string ddd, string numero)
     {
         return await _context.Clientes
             .Include(c => c.Telefones)
+            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Telefones
             .Any(t => t.DDD == ddd && t.Numero == numero));
     }
 
     public async Task<IEnumerable<Cliente>> GetAllAsync()
     {
-        return await _context.Clientes.Include(c => c.Telefones).ToListAsync();
+        return await _context.Clientes.Include(c => c.Telefones).AsNoTracking().ToListAsync();
     }
 
     public async Task AddAsync(Cliente cliente)
