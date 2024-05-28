@@ -88,7 +88,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> PostCliente([FromBody] CreateClienteDTO inputModel)
     {
         var clienteId = await _clienteService.AddClienteAsync(inputModel);
-        return CreatedAtAction(nameof(GetClienteById), new { id = clienteId });
+        return CreatedAtAction(nameof(GetClienteById), new { id = clienteId }, inputModel);
     }
 
     /// <summary>
